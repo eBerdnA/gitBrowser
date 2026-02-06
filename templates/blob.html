@@ -1,0 +1,28 @@
+{{template "header.html" .}}
+<div class="breadcrumb">
+    <a href="/repo/{{.Repo}}/tree/{{.Rev}}/">{{.Rev}}</a>
+    {{if .Path}}
+    <span>/</span>
+    {{range $i, $p := (split .Path "/")}}
+    {{if $p}}<a href="/repo/{{$.Repo}}/tree/{{$.Rev}}/{{join (slice (split $.Path "/") 0 (add $i 1)) "/"}}">{{$p}}</a><span>/</span>{{end}}
+    {{end}}
+    {{end}}
+</div>
+
+<div class="blob-actions">
+    <a href="/repo/{{.Repo}}/file-history/{{.Rev}}/{{.Path}}">View file history</a>
+</div>
+
+<div class="blob-wrapper">
+    <div class="line-numbers">
+        {{range $i, $line := .Lines}}
+        <div class="line-number">{{add $i 1}}</div>
+        {{end}}
+    </div>
+    <div class="blob-content">
+        {{range .Lines}}
+        <div class="blob-line">{{if .}}{{.}}{{else}}&nbsp;{{end}}</div>
+        {{end}}
+    </div>
+</div>
+{{template "footer.html" .}}

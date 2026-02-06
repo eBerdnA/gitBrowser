@@ -1,0 +1,22 @@
+{{template "header.html" .}}
+<div class="commit-header">
+    <h2>Commit {{.Hash}}</h2>
+    {{if .Path}}
+    <div class="commit-meta">File: {{.Path}}</div>
+    {{end}}
+</div>
+
+<div class="diff-container">
+    {{range $line := (split .Diff "\n")}}
+    {{if (hasPrefix $line "+")}}
+    <div class="diff-line addition">{{$line}}</div>
+    {{else if (hasPrefix $line "-")}}
+    <div class="diff-line deletion">{{$line}}</div>
+    {{else if (hasPrefix $line "@@")}}
+    <div class="diff-line meta">{{$line}}</div>
+    {{else}}
+    <div class="diff-line">{{$line}}</div>
+    {{end}}
+    {{end}}
+</div>
+{{template "footer.html" .}}

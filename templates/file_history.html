@@ -1,0 +1,21 @@
+{{template "header.html" .}}
+<div class="breadcrumb">
+    <a href="/repo/{{.Repo}}/tree/{{.Rev}}/">{{.Rev}}</a>
+    <span>/</span>
+    <a href="/repo/{{.Repo}}/blob/{{.Rev}}/{{.Path}}">{{.Path}}</a>
+</div>
+
+<div class="commit-header">
+    <h2>History for {{.Path}}</h2>
+</div>
+
+<div class="commit-list">
+    {{range .Commits}}
+    <div class="commit-item">
+        <div class="commit-hash"><a href="/repo/{{$.Repo}}/file-diff/{{.Hash}}/{{.Path}}">{{printf "%.8s" .Hash}}</a></div>
+        <div class="commit-subject">{{.Subject}}</div>
+        <div class="commit-meta">{{.Author}} committed on {{.Date}}</div>
+    </div>
+    {{end}}
+</div>
+{{template "footer.html" .}}

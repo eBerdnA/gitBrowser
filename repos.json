@@ -1,0 +1,12 @@
+{
+  "repos": [
+    {
+      "name": "gitBrowser",
+      "path": "."
+    },
+    {
+      "name": "locLogger",
+      "path": "../locLogger"
+    }
+  ]
+}

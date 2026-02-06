@@ -1,0 +1,11 @@
+{{template "header.html" .}}
+<div class="commit-list">
+    {{range .Commits}}
+    <div class="commit-item">
+        <div class="commit-hash"><a href="/repo/{{$.Repo}}/commit/{{.Hash}}">{{printf "%.8s" .Hash}}</a></div>
+        <div class="commit-subject">{{.Subject}}</div>
+        <div class="commit-meta">{{.Author}} committed on {{.Date}}</div>
+    </div>
+    {{end}}
+</div>
+{{template "footer.html" .}}

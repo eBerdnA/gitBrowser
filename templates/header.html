@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitBrowser</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+
+<body>
+    <header>
+        <a href="/repo/{{.Repo}}/" class="logo">GitBrowser</a>
+        <div class="header-right">
+            <button id="theme-toggle" class="theme-toggle" title="Toggle theme">
+                <span class="icon">🌓</span>
+                <span class="text">Theme</span>
+            </button>
+            <select aria-label="Repository" onchange="window.location.href='/repo/' + this.value + '/'">
+                {{range .Repos}}
+                <option value="{{.}}" {{if eq . $.Repo}}selected{{end}}>{{.}}</option>
+                {{end}}
+            </select>
+            <select aria-label="Branch" onchange="window.location.href='/repo/{{$.Repo}}/tree/' + this.value + '/'">
+                {{range .Branches}}
+                <option value="{{.}}" {{if eq . $.Rev}}selected{{end}}>{{.}}</option>
+                {{end}}
+            </select>
+        </div>
+    </header>
+    <script>
+        // Apply theme early to avoid flicker
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    </script>
+    <main>
+        <div class="sidebar">
+            <nav>
+                <a href="/repo/{{.Repo}}/tree/{{.Rev}}/" class="{{if eq .Rev $.Rev}}active{{end}}">Files</a>
+                <a href="/repo/{{.Repo}}/commits/{{.Rev}}">Commits</a>
+            </nav>
+        </div>
+        <div class="content" id="main-content">
