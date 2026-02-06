@@ -7,7 +7,7 @@ It is built for a very specific personal workflow, and I am happy if others can 
 ## run
 
 ```bash
-cd /Users/andre.bering/dev/gitBrowser
+cd /gitBrowser
 CGO_ENABLED=0 go run main.go
 ```
 
